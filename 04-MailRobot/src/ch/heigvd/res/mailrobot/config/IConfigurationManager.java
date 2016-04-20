@@ -10,5 +10,5 @@ public interface IConfigurationManager {
 	public List<Person> getVictims();
 	public List<Person> getWitnessesToCC();
 	public String getSmtpServerAddress();
-	public String getSmtpServerPort();
+	public int getSmtpServerPort();
 }

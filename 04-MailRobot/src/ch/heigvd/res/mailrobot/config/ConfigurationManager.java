@@ -1,5 +1,6 @@
 package ch.heigvd.res.mailrobot.config;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -14,15 +15,36 @@ import ch.heigvd.res.mailrobot.mail.Person;
 public class ConfigurationManager implements IConfigurationManager {
 	private Properties properties  = new Properties();
 	private String configFolder;
+	BufferedReader messageFile;
+	BufferedReader victimsFile;
 	
-	public ConfigurationManager(String configFolder) throws FileNotFoundException, IOException {
+	
+	public ConfigurationManager(String configFolder, String messageFile, String victimsFile) throws FileNotFoundException, IOException {
 		this.configFolder = configFolder;
+		this.messageFile = new BufferedReader(new FileReader(configFolder + "/" + messageFile));
+		this.victimsFile = new BufferedReader(new FileReader(configFolder + "/" + victimsFile));
 		properties.load(new FileInputStream(configFolder + "/config.properties"));
 	}
 	
+	
 	@Override
 	public List<String> getMessages() {
-		return null;
+		List<String> messages = new ArrayList<>();
+		String line = "";
+		String message = "";
+		try {
+			do{
+				while((line = messageFile.readLine()) != null && !line.equals("==")){
+					message += line + "\r\n";
+				}
+				messages.add(message);
+				message = "";
+			} while(line != null);
+			messageFile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return messages;
 	}
 
 	@Override
@@ -32,7 +54,17 @@ public class ConfigurationManager implements IConfigurationManager {
 
 	@Override
 	public List<Person> getVictims() {
-		return null;
+		List<Person> victims = new ArrayList<>();
+		String address;
+		try {
+			while((address = victimsFile.readLine()) != null){
+				victims.add(new Person(address));
+			}
+			victimsFile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return victims;
 	}
 
 	@Override
@@ -51,8 +83,8 @@ public class ConfigurationManager implements IConfigurationManager {
 	}
 
 	@Override
-	public String getSmtpServerPort() {
-		return properties.getProperty("smtpServerPort");
+	public int getSmtpServerPort() {
+		return Integer.valueOf(properties.getProperty("smtpServerPort"));
 	}
 
 }
