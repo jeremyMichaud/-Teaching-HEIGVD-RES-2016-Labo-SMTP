@@ -12,5 +12,10 @@ Afin de créer dynamiquement des listes de victimes, les adresses e-mail des vic
 
 Pour ce qui est des messages, la liste les contenant tous est mélangée, et ils sont tirés les uns après les autres (avec une boucle possible). Lors de l'extraction des message du fichier, le sujet du message est présent sur la première ligne, et le corps est constitué par tout le reste. Les messages sont séparés par les caractères "==" (présents seuls sur une ligne).
 
-En suivant le protocol, le client envoie les "commandes" ainsi que l'expéditeur, les destinataires et le message au serveur les uns après les autres et attend la réponse. Le programme affiche les réponses du serveur dans la console.
+En suivant le protocol, le client envoie les "commandes" ainsi que l'expéditeur, les destinataires et le message au serveur les uns après les autres et attend la réponse à chaque fois. Le programme affiche les réponses du serveur dans la console.
+
+## Instruction d'utilisation
+Il faut modifier les trois fichiers présents dans le dossier config: le fichier de configuration config.properties pour les configuration smtp, ainsi que la taille du groupe. Le fichier messages.utf8 pour les messages à envoyer. Ainsi que le fichier victims.utf8 pour la liste des adresses e-mail des victimes.
+
+Jérémy Michaud et Christophe Peretti
 
