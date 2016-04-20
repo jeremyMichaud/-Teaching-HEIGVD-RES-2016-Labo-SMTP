@@ -17,6 +17,8 @@ public class ConfigurationManager implements IConfigurationManager {
 	private String configFolder;
 	BufferedReader messageFile;
 	BufferedReader victimsFile;
+	List<Person> victims;
+	List<String> messages;
 	
 	
 	public ConfigurationManager(String configFolder, String messageFile, String victimsFile) throws FileNotFoundException, IOException {
@@ -24,26 +26,30 @@ public class ConfigurationManager implements IConfigurationManager {
 		this.messageFile = new BufferedReader(new FileReader(configFolder + "/" + messageFile));
 		this.victimsFile = new BufferedReader(new FileReader(configFolder + "/" + victimsFile));
 		properties.load(new FileInputStream(configFolder + "/config.properties"));
+
+		victims = new ArrayList<>();
+		String address;
+		while((address = this.victimsFile.readLine()) != null){
+			victims.add(new Person(address));
+		}
+		this.victimsFile.close();
+		
+		messages = new ArrayList<>();
+		String line = "";
+		String message = "";
+		do{
+			while((line = this.messageFile.readLine()) != null && !line.equals("==")){
+				message += line + "\r\n";
+			}
+			messages.add(message);
+			message = "";
+		} while(line != null);
+		this.messageFile.close();
 	}
 	
 	
 	@Override
 	public List<String> getMessages() {
-		List<String> messages = new ArrayList<>();
-		String line = "";
-		String message = "";
-		try {
-			do{
-				while((line = messageFile.readLine()) != null && !line.equals("==")){
-					message += line + "\r\n";
-				}
-				messages.add(message);
-				message = "";
-			} while(line != null);
-			messageFile.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		return messages;
 	}
 
@@ -54,16 +60,6 @@ public class ConfigurationManager implements IConfigurationManager {
 
 	@Override
 	public List<Person> getVictims() {
-		List<Person> victims = new ArrayList<>();
-		String address;
-		try {
-			while((address = victimsFile.readLine()) != null){
-				victims.add(new Person(address));
-			}
-			victimsFile.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		return victims;
 	}
 
