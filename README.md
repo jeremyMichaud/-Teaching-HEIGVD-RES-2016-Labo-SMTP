@@ -1,3 +1,5 @@
+Jérémy Michaud et Christophe Peretti
+
 # Teaching-HEIGVD-RES-2016-Labo-SMTP
 ## But
 Le but de ce laboratoire est d'implémenter un programme qui génère des emails forgés. Un serveur Mock sera utilisé pour tester le programme et ainsi ne pas surcharger ou spammer les serveurs de l'école, ainsi que les victimes.
@@ -17,5 +19,5 @@ En suivant le protocol, le client envoie les "commandes" ainsi que l'expéditeur
 ## Instruction d'utilisation
 Il faut modifier les trois fichiers présents dans le dossier config: le fichier de configuration config.properties pour les configuration smtp, ainsi que la taille du groupe. Le fichier messages.utf8 pour les messages à envoyer. Ainsi que le fichier victims.utf8 pour la liste des adresses e-mail des victimes.
 
-Jérémy Michaud et Christophe Peretti
+
 
